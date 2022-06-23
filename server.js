@@ -11,16 +11,16 @@ const { response } = require('express');
 async function insertToDB(data){
     const conn = await client.connect();
     const collection = client.db("heydo").collection("userdata");
-    let response = NULL;
+    let res = "NULL";
     try {
-     response = await collection.insertOne(data);
-    console.log(response);
-    client.close();
-    } catch (error) {
-     response = "Error";
-    }
+     res = await collection.insertOne(data);
+    console.log(res);
     
-    return response;
+    } catch (error) {
+     res = "Error";
+    }
+    client.close();
+    return res;
 }
 app.use(cors()) // Use this after the variable declaration
 //Here we are configuring express to use body-parser as middle-ware.
@@ -31,11 +31,19 @@ app.use(bodyParser.json());
 // add router in the Express app.
 app.use("/", router);
 router.post('/create',(request,response) => {
-    console.log(request.body);
+    // console.log(request.body);
     //code to perform particular action.
     //To access POST variable use req.body()methods.
-        const response = insertToDB(request.body);
-        response.send(response);
+    // console.log("HERE");
+  insertToDB(request.body).then(
+    (res)=>{
+        if (res === "Error" || res === "NULL") {
+            response.sendStatus(500);
+        }else{
+            response.sendStatus(200);
+        }
+    }
+  )
     
     });
 router.get('/',(req,res)=>{
