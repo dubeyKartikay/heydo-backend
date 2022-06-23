@@ -6,13 +6,21 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const router = express.Router();
 const app = express();
-var cors = require('cors')
+var cors = require('cors');
+const { response } = require('express');
 async function insertToDB(data){
     const conn = await client.connect();
     const collection = client.db("heydo").collection("userdata");
-    const response = await collection.insertOne(data);
+    let response = NULL;
+    try {
+     response = await collection.insertOne(data);
     console.log(response);
     client.close();
+    } catch (error) {
+     response = "Error";
+    }
+    
+    return response;
 }
 app.use(cors()) // Use this after the variable declaration
 //Here we are configuring express to use body-parser as middle-ware.
@@ -26,8 +34,8 @@ router.post('/create',(request,response) => {
     console.log(request.body);
     //code to perform particular action.
     //To access POST variable use req.body()methods.
-        insertToDB(request.body);
-        response.send("OK");
+        const response = insertToDB(request.body);
+        response.send(response);
     
     });
 router.get('/',(req,res)=>{
