@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 // add router in the Express app.
 app.use("/", router);
 router.post('/create',(request,response) => {
-    print(request.body);
+    console.log(request.body);
     //code to perform particular action.
     //To access POST variable use req.body()methods.
         insertToDB(request.body);
