@@ -30,6 +30,10 @@ router.post('/create',(request,response) => {
         response.send("OK");
     
     });
+router.get('/',(req,res)=>{
+    console.log("invalidURL");
+})
+
     
 app.listen(3001,() => {
     console.log("Started on PORT 3001");
