@@ -19,17 +19,18 @@ app.use(cors()) // Use this after the variable declaration
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-router.post('/create',(request,response) => {
-//code to perform particular action.
-//To access POST variable use req.body()methods.
-    insertToDB(request.body);
-    response.send("OK");
-
-});
 
 // add router in the Express app.
 app.use("/", router);
-
+router.post('/create',(request,response) => {
+    print(request.body);
+    //code to perform particular action.
+    //To access POST variable use req.body()methods.
+        insertToDB(request.body);
+        response.send("OK");
+    
+    });
+    
 app.listen(3001,() => {
     console.log("Started on PORT 3001");
     })
