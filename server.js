@@ -83,7 +83,7 @@ async function insertUser(username,password){
     const conn = await client.connect();
     const collection = client.db("heydo").collection("users");
     const hash = crypto.createHash('sha256').update(`${username}${password}saltnpepper`).digest('hex');
-    const data = { "_id":username,"username":username,"password":password};
+    const data = { "_id":username,"username":username,"password":hash};
     const result = await collection.insertOne(data);
     return result;
 
