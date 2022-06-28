@@ -3,6 +3,7 @@ const uri = "mongodb+srv://heydo:TlsxfCRro7eQagYW@cluster0.qgxvc.mongodb.net/?re
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 var crypto = require('crypto');
 const express = require("express");
+const { v4: uuidv4 } = require('uuid');
 const bodyParser = require("body-parser");
 const router = express.Router();
 const app = express();
@@ -83,7 +84,7 @@ async function insertUser(username,password){
     const conn = await client.connect();
     const collection = client.db("heydo").collection("users");
     const hash = crypto.createHash('sha256').update(`${username}${password}saltnpepper`).digest('hex');
-    const data = { "_id":username,"username":username,"password":hash};
+    const data = { "_id":username,"dealerID":uuidv4(),"username":username,"password":hash,};
     const result = await collection.insertOne(data);
     return result;
 
