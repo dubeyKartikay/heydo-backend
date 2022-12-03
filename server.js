@@ -101,6 +101,7 @@ router.post('/signup',(req,response)=>{
 })
 router.get('/',(req,res)=>{
     console.log("invalidURL");
+    res.send("<h1>HELLOOO</h1>")
     
 })
 
